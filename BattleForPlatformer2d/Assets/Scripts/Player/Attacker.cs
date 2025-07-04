@@ -9,10 +9,10 @@ public class Attacker : MonoBehaviour
     [SerializeField] private float _radius;
     [SerializeField] private float _frequency;
 
-    public event Action<bool> Attacked;
-
     private Enemy _target;
     private Coroutine _attacking;
+
+    public event Action<bool> Attacked;
 
     private void OnEnable()
     {
@@ -22,18 +22,6 @@ public class Attacker : MonoBehaviour
     private void OnDisable()
     {
         StopCoroutine(_attacking);
-    }
-
-    private IEnumerator Attack() 
-    {
-        WaitForSeconds delay = new WaitForSeconds(_frequency);
-
-        while (_target != null) 
-        {
-            _target.TakeDamage(_damage);
-
-            yield return delay;
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -53,6 +41,18 @@ public class Attacker : MonoBehaviour
             Attacked.Invoke(false);
             _target = null;
             StopCoroutine(_attacking);
+        }
+    }
+
+    private IEnumerator Attack() 
+    {
+        WaitForSeconds delay = new WaitForSeconds(_frequency);
+
+        while (_target != null) 
+        {
+            _target.TakeDamage(_damage);
+
+            yield return delay;
         }
     }
 }

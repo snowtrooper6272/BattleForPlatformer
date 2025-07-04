@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     [SerializeField] private GroundChecker _groundChecker;
     [SerializeField] private Attacker _attacker;
     [SerializeField] private PickUperHealthPacks _pickUperHealthPacks;
-    [SerializeField] private int _health;
+    [SerializeField] private HealthIndicator _healthIndicator;
 
     private void OnEnable()
     {
@@ -59,14 +59,11 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damage) 
     {
-        _health -= damage;
-
-        if (_health <= 0)
-            gameObject.SetActive(false);
+        _healthIndicator.TakeDamage(damage);
     }
 
     private void Recovery(int recoverableHealth) 
     {
-        _health += recoverableHealth;
+        _healthIndicator.Recovery(recoverableHealth);
     }
 }

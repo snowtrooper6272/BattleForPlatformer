@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class InputReader : MonoBehaviour
 {
-    public float AxisDirection { get; private set; }
-    public bool IsJumpKeyDown { get; private set; }
-
     private string _moveAxis = "Horizontal";
     private KeyCode _jumpKey = KeyCode.Space;
+
+    public float AxisDirection { get; private set; }
+    public bool IsJumpKeyDown { get; private set; }
 
     private void Update()
     {
