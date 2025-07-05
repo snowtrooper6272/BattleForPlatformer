@@ -27,7 +27,7 @@ public class PlayerAnimator : MonoBehaviour
         _animator.SetBool(_isJump, true);
     }
 
-    public void Aterrissagem() 
+    public void SetGrounded() 
     {
         _animator.SetBool(_isJump, false);
     }

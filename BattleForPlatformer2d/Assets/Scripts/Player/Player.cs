@@ -48,7 +48,7 @@ public class Player : MonoBehaviour
 
     private void SetGrounded()
     {
-        _animator.Aterrissagem();
+        _animator.SetGrounded();
         _jumper.SetGrounded();
     }
 
