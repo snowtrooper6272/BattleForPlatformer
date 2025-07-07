@@ -11,7 +11,7 @@ public class AlienationTransition : Transition
 
     private void OnEnable()
     {
-        IsNeedTransist = false;
+        IsNeedTransit = false;
         _checking = StartCoroutine(Checking());
     }
 
@@ -25,7 +25,7 @@ public class AlienationTransition : Transition
     {
         WaitForSeconds delay = new WaitForSeconds(_checkDelay);
 
-        while (IsNeedTransist == false)
+        while (IsNeedTransit == false)
         {
             RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, _checkRadius, transform.forward);
             Player target = null;
@@ -40,7 +40,7 @@ public class AlienationTransition : Transition
 
             if (target == null) 
             {
-                IsNeedTransist = true;
+                IsNeedTransit = true;
             }
 
             yield return delay;

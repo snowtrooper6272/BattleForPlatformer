@@ -11,7 +11,7 @@ public class ConvergenceTransition : Transition
 
     private void OnEnable()
     {
-        IsNeedTransist = false;
+        IsNeedTransit = false;
         _checking = StartCoroutine(Checking());
     }
 
@@ -25,7 +25,7 @@ public class ConvergenceTransition : Transition
     {
         WaitForSeconds delay = new WaitForSeconds(_checkDelay);
 
-        while (IsNeedTransist == false) 
+        while (IsNeedTransit == false) 
         {
             RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, _checkRadius, transform.forward);
 
@@ -33,7 +33,7 @@ public class ConvergenceTransition : Transition
             {
                 if (hit.collider.gameObject.TryGetComponent(out Player player)) 
                 {
-                    IsNeedTransist = true;
+                    IsNeedTransit = true;
                 }
             }
 

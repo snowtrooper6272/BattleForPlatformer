@@ -9,28 +9,32 @@ public class EnemyStateMachine : MonoBehaviour
 
     private State _currentState;
 
-    private void Start()
+    private void OnEnable()
     {
         _currentState = _startState;
+        _currentState.Transited += ChangeState;
+    }
+
+    private void OnDisable()
+    {
+        _currentState.Transited -= ChangeState;
+    }
+
+    private void Start()
+    {
         _currentState.enabled = true;
         _currentState.Init(_target);
     }
 
-    private void Update()
+    private void ChangeState(State targetState) 
     {
-        foreach (Transition transition in _currentState.Transition)
-        {
-            if (transition.IsNeedTransist == true)
-            {
-                _currentState.Exit();
-                _currentState.enabled = false;
+        _currentState.Transited -= ChangeState;
+        _currentState.Exit();
+        _currentState.enabled = false;
 
-                _currentState = transition.TargetState;
-                _currentState.enabled = true;
-                _currentState.Init(_target);
-
-                break;
-            }
-        }
+        _currentState = targetState;
+        _currentState.enabled = true;
+        _currentState.Init(_target);
+        _currentState.Transited += ChangeState;
     }
 }

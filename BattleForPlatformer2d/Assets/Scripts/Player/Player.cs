@@ -12,13 +12,14 @@ public class Player : MonoBehaviour
     [SerializeField] private GroundChecker _groundChecker;
     [SerializeField] private Attacker _attacker;
     [SerializeField] private PickUperHealthPacks _pickUperHealthPacks;
-    [SerializeField] private HealthIndicator _healthIndicator;
+    [SerializeField] private Health _healthIndicator;
 
     private void OnEnable()
     {
         _groundChecker.Grounded += SetGrounded;
         _attacker.Attacked += SetAttackMode;
         _pickUperHealthPacks.Matched += Recovery;
+        _healthIndicator.Died += Die;
     }
 
     private void OnDisable()
@@ -26,6 +27,7 @@ public class Player : MonoBehaviour
         _groundChecker.Grounded -= SetGrounded;
         _attacker.Attacked -= SetAttackMode;
         _pickUperHealthPacks.Matched -= Recovery;
+        _healthIndicator.Died -= Die;
     }
 
     private void Update()
@@ -65,5 +67,10 @@ public class Player : MonoBehaviour
     private void Recovery(int recoverableHealth) 
     {
         _healthIndicator.Recovery(recoverableHealth);
+    }
+
+    private void Die() 
+    {
+        gameObject.SetActive(false);
     }
 }

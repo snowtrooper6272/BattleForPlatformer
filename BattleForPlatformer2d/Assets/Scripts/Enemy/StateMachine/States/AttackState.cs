@@ -34,5 +34,6 @@ public class AttackState : State
     public override void Exit()
     {
         StopCoroutine(_attacking);
+        _animator.StopAttack();
     }
 }

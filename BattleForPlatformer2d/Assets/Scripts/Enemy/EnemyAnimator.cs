@@ -6,10 +6,15 @@ public class EnemyAnimator : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
 
-    private readonly string _attack = "Attack";
+    private readonly int _isAttack = Animator.StringToHash(nameof(_isAttack));
 
     public void PlayAttack() 
     {
-        _animator.Play(_attack);
+        _animator.SetBool(_isAttack, true);
+    }
+
+    public void StopAttack() 
+    {
+        _animator.SetBool(_isAttack, false);
     }
 }

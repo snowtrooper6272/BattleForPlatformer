@@ -8,5 +8,5 @@ public class Transition : MonoBehaviour
 
     public State TargetState => _targetState;
 
-    public bool IsNeedTransist { get; protected set; } = false;
+    public bool IsNeedTransit { get; protected set; } = false;
 }
