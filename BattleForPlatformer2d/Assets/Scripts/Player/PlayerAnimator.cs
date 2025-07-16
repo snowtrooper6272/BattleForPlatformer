@@ -8,6 +8,7 @@ public class PlayerAnimator : MonoBehaviour
     private readonly int _speed = Animator.StringToHash(nameof(_speed));
     private readonly int _isJump = Animator.StringToHash(nameof(_isJump));
     private readonly int _isAttack = Animator.StringToHash(nameof(_isAttack));
+    private readonly string _attack = "attack";
 
     public void PlayRun(float axisDirection, float speed) 
     {
@@ -17,9 +18,9 @@ public class PlayerAnimator : MonoBehaviour
             _animator.SetFloat(_speed, 0);
     }
 
-    public void SetAttack(bool isPlay) 
+    public void PlayAttack() 
     {
-        _animator.SetBool(_isAttack, isPlay);
+        _animator.Play(_attack);
     }
 
     public void PlayJump() 

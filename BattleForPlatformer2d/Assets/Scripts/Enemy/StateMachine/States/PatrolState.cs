@@ -48,13 +48,6 @@ public class PatrolState : State
     {
         Vector2 offset = _patrolPoint[_currentIndexOfPoint].position - transform.position;
 
-        if (offset.sqrMagnitude <= _switchDistance * _switchDistance)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return offset.sqrMagnitude <= _switchDistance * _switchDistance;
     }
 }

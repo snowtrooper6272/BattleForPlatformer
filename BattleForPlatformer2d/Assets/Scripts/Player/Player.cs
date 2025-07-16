@@ -17,17 +17,17 @@ public class Player : MonoBehaviour
     private void OnEnable()
     {
         _groundChecker.Grounded += SetGrounded;
-        _attacker.Attacked += SetAttackMode;
         _pickUperHealthPacks.Matched += Recovery;
         _healthIndicator.Died += Die;
+        _inputReader.Attacked += Attack;
     }
 
     private void OnDisable()
     {
         _groundChecker.Grounded -= SetGrounded;
-        _attacker.Attacked -= SetAttackMode;
         _pickUperHealthPacks.Matched -= Recovery;
         _healthIndicator.Died -= Die;
+        _inputReader.Attacked -= Attack;
     }
 
     private void Update()
@@ -54,11 +54,6 @@ public class Player : MonoBehaviour
         _jumper.SetGrounded();
     }
 
-    private void SetAttackMode(bool isEnable)
-    {
-        _animator.SetAttack(isEnable);
-    }
-
     public void TakeDamage(int damage) 
     {
         _healthIndicator.TakeDamage(damage);
@@ -72,5 +67,11 @@ public class Player : MonoBehaviour
     private void Die() 
     {
         gameObject.SetActive(false);
+    }
+
+    private void Attack() 
+    {
+        _animator.PlayAttack();
+        _attacker.Attack();
     }
 }

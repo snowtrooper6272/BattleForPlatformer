@@ -8,6 +8,7 @@ public class ConvergenceTransition : Transition
     [SerializeField] private float _checkRadius;
 
     private Coroutine _checking;
+    private int _numberOfLayerPlayer = 7;
 
     private void OnEnable()
     {
@@ -27,11 +28,11 @@ public class ConvergenceTransition : Transition
 
         while (IsNeedTransit == false) 
         {
-            RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, _checkRadius, transform.forward);
+            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, _checkRadius, 1 << _numberOfLayerPlayer);
 
             foreach (var hit in hits) 
             {
-                if (hit.collider.gameObject.TryGetComponent(out Player player)) 
+                if (hit.gameObject.TryGetComponent(out Player player)) 
                 {
                     IsNeedTransit = true;
                 }

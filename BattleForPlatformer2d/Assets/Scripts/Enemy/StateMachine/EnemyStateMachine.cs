@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyStateMachine : MonoBehaviour
 {
     [SerializeField] private State _startState;
-    [SerializeField] private Player _target;
+    [SerializeField] private Enemy _enemy;
 
     private State _currentState;
 
@@ -23,7 +23,7 @@ public class EnemyStateMachine : MonoBehaviour
     private void Start()
     {
         _currentState.enabled = true;
-        _currentState.Init(_target);
+        _currentState.Init(_enemy.Target);
     }
 
     private void ChangeState(State targetState) 
@@ -34,7 +34,7 @@ public class EnemyStateMachine : MonoBehaviour
 
         _currentState = targetState;
         _currentState.enabled = true;
-        _currentState.Init(_target);
+        _currentState.Init(_enemy.Target);
         _currentState.Transited += ChangeState;
     }
 }
