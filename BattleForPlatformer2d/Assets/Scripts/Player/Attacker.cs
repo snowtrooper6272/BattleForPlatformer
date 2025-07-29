@@ -1,6 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Enemies;
 using UnityEngine;
 
 public class Attacker : MonoBehaviour
@@ -12,11 +10,11 @@ public class Attacker : MonoBehaviour
 
     public void Attack() 
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, _radius, 1 << _numberOfEnemyLayer);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, LayerMask.NameToLayer("Enemy"));//_radius, 1 << _numberOfEnemyLayer);
 
         foreach (Collider2D hit in hits) 
         {
-            if (hit.gameObject.TryGetComponent(out Enemy target)) 
+            if (hit.gameObject.TryGetComponent(out Health target)) 
             {
                 target.TakeDamage(_damage);
             }

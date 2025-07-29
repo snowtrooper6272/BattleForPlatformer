@@ -1,57 +1,61 @@
-using System.Collections;
+using Interfaces;
+using Scripts;
+using Scripts.Factory;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+namespace Enemies
 {
-    [SerializeField] private Health _healthIndicator;
-    [SerializeField] private float _findingRadius;
-    [SerializeField] private float _delayOfFinding;
-
-    private Coroutine _finding;
-    private bool _isNeedFinding = true;
-    private int _numberOfPlayerLayer = 7;
-
-    public Player Target { get; private set; }
-
-    private void OnEnable()
+    [RequireComponent(typeof(StateMachineFactory))]
+    public class Enemy : MonoBehaviour, IDamageable
     {
-        _healthIndicator.Died += Die;
-        _finding = StartCoroutine(Finding());
-    }
+        [SerializeField] private Health _healthIndicator;
+        [SerializeField] private Rigidbody2D _rigidbody2D;
+        [SerializeField] private ControlPoint[] _patrolPoints;
 
-    private void OnDisable()
-    {
-        _healthIndicator.Died -= Die;
-        StopCoroutine(_finding);
-    }
+        private StateMachine _stateMachine;
 
-    private IEnumerator Finding() 
-    {
-        WaitForSeconds delay = new WaitForSeconds(_delayOfFinding);
-
-        while (_isNeedFinding) 
+        private void OnEnable()
         {
-            Collider2D[] collisions = Physics2D.OverlapCircleAll(transform.position, _findingRadius, 1 << _numberOfPlayerLayer);
-
-            foreach (Collider2D collision in collisions) 
-            {
-                if (collision.TryGetComponent(out Player player)) 
-                {
-                    Target = player;
-                }
-            }
-
-            yield return delay;
+            _healthIndicator.Died += Die;
         }
-    }
 
-    public void TakeDamage(int damage)
-    {
-        _healthIndicator.TakeDamage(damage);
-    }
+        private void OnDisable()
+        {
+            _healthIndicator.Died -= Die;
+        }
 
-    private void Die() 
-    {
-        gameObject.SetActive(false);
+        private void Update()
+        {
+            _stateMachine.Update();
+        }
+
+        public void Init(Player player) // откдуа?
+        {
+            _stateMachine = GetComponent<StateMachineFactory>().Create(this, player, _patrolPoints);
+        }
+
+        public void TakeDamage(int damage)
+        {
+            _healthIndicator.TakeDamage(damage);
+        }
+
+        public void Move(Vector3 target, float speed) 
+        {
+            var direction = (target - transform.position).normalized;
+
+            _rigidbody2D.velocity = direction * speed;
+        }
+
+        public bool PatrolPointAssembled(ControlPoint target, float switchDistance)
+        {
+            Vector2 offset = target.transform.position - transform.position;
+
+            return offset.sqrMagnitude <= switchDistance * switchDistance;
+        }
+
+        private void Die()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

@@ -1,3 +1,4 @@
+using Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ public class Health : MonoBehaviour
 {
     [SerializeField] private int _health;
 
-    private int _maxHealth;
+    private int _maxHealth = 20;
     private int _minHealth = 0;
 
     public event Action Died;
@@ -32,7 +33,11 @@ public class Health : MonoBehaviour
 
     public void Recovery(int recoverableHealth)
     {
-        if(recoverableHealth > 0)
+        if (recoverableHealth > 0)
+        {
             _health += recoverableHealth;
+
+            _health = Mathf.Clamp(_health, _minHealth, _maxHealth);
+        }
     }
 }
