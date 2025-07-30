@@ -9,18 +9,17 @@ namespace Transitions
     {
         private Player _target;
         private Enemy _enemy;
-        private float _distance;
+        private int _distance;
 
-        public AlienationTransition(State targetState, Player target, Enemy enemy, float distance) : base(targetState)
+        public AlienationTransition(State targetState, Enemy enemy, int distance) : base(targetState)
         {
             _distance = distance;
-            _target = target;
             _enemy = enemy;
         }
 
         public override bool IsNeedTransit()
         {
-            if ((_target.transform.position - _enemy.transform.position).sqrMagnitude > _distance * _distance)
+            if (_enemy.FindTarget(_distance) == null)
                 return true;
 
             return false;

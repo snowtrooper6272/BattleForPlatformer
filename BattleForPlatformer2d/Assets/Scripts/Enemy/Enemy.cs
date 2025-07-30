@@ -1,6 +1,7 @@
 using Interfaces;
 using Scripts;
 using Scripts.Factory;
+using System;
 using UnityEngine;
 
 namespace Enemies
@@ -13,6 +14,9 @@ namespace Enemies
         [SerializeField] private ControlPoint[] _patrolPoints;
 
         private StateMachine _stateMachine;
+        private int _trackDistance = 22;
+
+        public Player TrackTarget => FindTarget();
 
         private void OnEnable()
         {
@@ -24,14 +28,50 @@ namespace Enemies
             _healthIndicator.Died -= Die;
         }
 
+        private void Start()
+        {
+            _stateMachine = GetComponent<StateMachineFactory>().Create(this, _patrolPoints);
+        }
+
         private void Update()
         {
             _stateMachine.Update();
         }
 
-        public void Init(Player player) // откдуа?
+        private Player FindTarget()
         {
-            _stateMachine = GetComponent<StateMachineFactory>().Create(this, player, _patrolPoints);
+            Player target = null;
+            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, _trackDistance);
+
+            foreach (var hit in hits) 
+            {
+                if (hit.TryGetComponent(out Player player))
+                {
+                    target = player;
+
+                    break;
+                }
+            }
+
+            return target;
+        }
+
+        public Player FindTarget(int distance) 
+        {
+            Player target = null;
+            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, distance);
+
+            foreach (var hit in hits)
+            {
+                if (hit.TryGetComponent(out Player player))
+                {
+                    target = player;
+
+                    break;
+                }
+            }
+
+            return target;
         }
 
         public void TakeDamage(int damage)

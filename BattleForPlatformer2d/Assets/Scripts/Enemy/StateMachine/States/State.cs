@@ -29,7 +29,11 @@ namespace States
             foreach (Transition transition in _transitions) 
             {
                 if (transition.IsNeedTransit())
+                {
                     Changed.Invoke(transition.NextState);
+
+                    break;
+                }
             }
         }
 

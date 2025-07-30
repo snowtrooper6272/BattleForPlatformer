@@ -12,15 +12,15 @@ namespace States
         private Player _target;
         private float _speed = 5;
 
-        public FollowState(List<Transition> transition, Enemy enemy, Player target) : base(transition)
+        public FollowState(List<Transition> transition, Enemy enemy) : base(transition)
         {
             _enemy = enemy;
-            _target = target;
         }
 
         public override void OnUpdate()
         {
-            _enemy.Move(_target.transform.position, _speed);
+            if(_enemy.TrackTarget)
+                _enemy.Move(_enemy.TrackTarget.transform.position, _speed);
         }
     }
 }
