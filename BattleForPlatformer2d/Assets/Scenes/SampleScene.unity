@@ -184,8 +184,10 @@ GameObject:
   - component: {fileID: 73489667}
   - component: {fileID: 73489684}
   - component: {fileID: 73489676}
-  - component: {fileID: 73489682}
-  - component: {fileID: 73489683}
+  - component: {fileID: 73489685}
+  - component: {fileID: 73489686}
+  - component: {fileID: 73489688}
+  - component: {fileID: 73489687}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Untagged
@@ -366,32 +368,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 73489667}
---- !u!114 &73489682
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 73489656}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce60cd90c38da9e4b86894fe3e84485e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _health: 10
---- !u!114 &73489683
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 73489656}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8efb392ca958e60448d771ab369ffcc3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 73489676}
 --- !u!114 &73489684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -404,11 +380,64 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0e058097ae95ec449521678f4e032fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthIndicator: {fileID: 73489682}
+  _healthIndicator: {fileID: 73489685}
   _rigidbody2D: {fileID: 73489665}
   _patrolPoints:
   - {fileID: 1270013734}
   - {fileID: 1333394467}
+--- !u!114 &73489685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 73489656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d73a6864ec7af748a225a73d66a574f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: 10
+--- !u!114 &73489686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 73489656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8efb392ca958e60448d771ab369ffcc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 73489676}
+  _mover: {fileID: 73489687}
+  _finder: {fileID: 73489688}
+--- !u!114 &73489687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 73489656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71cefa786b91a204aab28eaa8686bf16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rigidbody2D: {fileID: 73489665}
+--- !u!114 &73489688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 73489656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 475e21b0dd29cfd4c9666628a08a65e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -16211,8 +16240,8 @@ GameObject:
   - component: {fileID: 2068581611}
   - component: {fileID: 2068581613}
   - component: {fileID: 2068581616}
-  - component: {fileID: 2068581617}
   - component: {fileID: 2068581614}
+  - component: {fileID: 2068581617}
   m_Layer: 7
   m_Name: Hero
   m_TagString: Untagged
@@ -16512,7 +16541,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 3
   _radius: 6
-  attackLayer:
+  _attackLayer:
     serializedVersion: 2
     m_Bits: 256
 --- !u!58 &2068581614
@@ -16571,10 +16600,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2068581594}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce60cd90c38da9e4b86894fe3e84485e, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d73a6864ec7af748a225a73d66a574f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 20
+  _health: 10
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

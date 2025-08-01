@@ -1,23 +1,23 @@
 using Enemies;
+using Interfaces;
 using UnityEngine;
 
 public class Attacker : MonoBehaviour
 {
     [SerializeField] private int _damage;
     [SerializeField] private float _radius;
-    [SerializeField] private LayerMask attackLayer;
+    [SerializeField] private LayerMask _attackLayer;
 
-    private int _numberOfEnemyLayer = 8;
-
-    public void Attack() 
-    {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, attackLayer);
+    public void Attack()
+    { 
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, _radius, _attackLayer);
 
         foreach (Collider2D hit in hits) 
         {
-            if (hit.gameObject.TryGetComponent(out Health target)) 
+            if (hit.TryGetComponent(out Player player) == false)
             {
-                target.TakeDamage(_damage);
+                hit.TryGetComponent(out IDamageable damageable);
+                damageable?.TakeDamage(_damage);
             }
         }
     }

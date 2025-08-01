@@ -1,4 +1,5 @@
 using Enemies;
+using ServiceStates;
 using System.Collections;
 using System.Collections.Generic;
 using Transitions;
@@ -10,14 +11,16 @@ namespace States
     {
         private Enemy _enemy;
         private EnemyAnimator _animator;
+        private EnemyFinder _finder;
         private int _damage = 3;
         private float _attackDelay = 1;
         private float _currentTime;
 
-        public AttackState(List<Transition> transition, Enemy enemy, EnemyAnimator animator) : base(transition)
+        public AttackState(List<Transition> transition, Enemy enemy, EnemyAnimator animator, EnemyFinder finder) : base(transition)
         {
             _enemy = enemy;
             _animator = animator;
+            _finder = finder;
         }
 
         public override void Enter()
@@ -32,10 +35,12 @@ namespace States
 
         public override void OnUpdate()
         {
-            if (_currentTime >= _attackDelay && _enemy.TrackTarget) 
+            Player target = _finder.TrackTarget;
+
+            if (_currentTime >= _attackDelay && target)
             {
                 _currentTime = 0;
-                _enemy.TrackTarget.TakeDamage(_damage);
+                target.TakeDamage(_damage);
             }
 
             _currentTime += Time.deltaTime;

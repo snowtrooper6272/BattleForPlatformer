@@ -13,7 +13,7 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private GroundChecker _groundChecker;
     [SerializeField] private Attacker _attacker;
     [SerializeField] private PickUperHealthPacks _pickUperHealthPacks;
-    [SerializeField] private Health _healthIndicator;
+    [SerializeField] private HealthIndicator _healthIndicator;
 
     private void OnEnable()
     {

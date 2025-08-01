@@ -1,6 +1,7 @@
 using Enemies;
 using System.Collections.Generic;
 using Transitions;
+using ServiceStates;
 
 namespace States
 {
@@ -9,14 +10,16 @@ namespace States
         private readonly Enemy _enemy;
 
         private ControlPoint[] _controlPoints;
+        private EnemyMover _mover;
         private float _speed = 5;
         private float _switchDistance = 2;
         private int _currentIndexOfPoint = 0;
 
-        public PatrolState(List<Transition> transition, Enemy enemy, ControlPoint[] controlPoints) : base(transition) 
+        public PatrolState(List<Transition> transition, Enemy enemy, ControlPoint[] controlPoints, EnemyMover mover) : base(transition) 
         {
             _enemy = enemy;
             _controlPoints = controlPoints;
+            _mover = mover;
         }
 
         public override void OnUpdate()
@@ -26,7 +29,7 @@ namespace States
                 SetNewTarget();
             }
 
-            _enemy.Move(_controlPoints[_currentIndexOfPoint].transform.position, _speed);
+            _mover.Move(_controlPoints[_currentIndexOfPoint].transform.position, _speed);
         }
 
         public void SetNewTarget()

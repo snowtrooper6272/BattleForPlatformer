@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Health : MonoBehaviour
+public class HealthIndicator : MonoBehaviour
 {
     [SerializeField] private int _health;
 
