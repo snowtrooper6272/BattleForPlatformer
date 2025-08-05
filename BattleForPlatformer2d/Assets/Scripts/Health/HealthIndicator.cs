@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HealthIndicator : MonoBehaviour
 {
@@ -12,10 +13,14 @@ public class HealthIndicator : MonoBehaviour
     private int _minHealth = 0;
 
     public event Action Died;
+    public event Action<int> TakedDamage;
+    public event Action<int> Recovered;
+    public int MaxHealth => _maxHealth;
+    public int Health => _health;
 
-    private void Start()
+    private void OnEnable()
     {
-        _maxHealth = _health;
+        _health = _maxHealth;
     }
 
     public void TakeDamage(int damage) 
@@ -25,6 +30,7 @@ public class HealthIndicator : MonoBehaviour
             _health -= damage;
 
             _health = Mathf.Clamp(_health, _minHealth, _maxHealth);
+            TakedDamage.Invoke(_health);
 
             if (_health <= 0)
                 Died.Invoke();
@@ -38,6 +44,7 @@ public class HealthIndicator : MonoBehaviour
             _health += recoverableHealth;
 
             _health = Mathf.Clamp(_health, _minHealth, _maxHealth);
+            Recovered.Invoke(_health);
         }
     }
 }
