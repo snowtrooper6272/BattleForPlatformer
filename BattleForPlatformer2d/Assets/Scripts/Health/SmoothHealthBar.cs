@@ -5,28 +5,14 @@ using Interfaces;
 using UnityEngine.UI;
 using System;
 
-public class SmoothHealthBar : MonoBehaviour, IHealthChangeable
+public class SmoothHealthBar : RenderHealth
 {
-    [SerializeField] private HealthIndicator _healthIndicator;
     [SerializeField] private Slider _slider;
     [SerializeField] private float _timeSmoothChange;
 
     private Coroutine _smoothChangingValue;
 
-    private void OnEnable()
-    {
-        _healthIndicator.TakedDamage += ChangeHealth;
-        _healthIndicator.Recovered += ChangeHealth;
-    }
-
-    private void OnDisable()
-    {
-        _healthIndicator.TakedDamage -= ChangeHealth;
-        _healthIndicator.Recovered -= ChangeHealth;
-        StopCoroutine(_smoothChangingValue);
-    }
-
-    public void ChangeHealth(int newHealth)
+    override protected void ChangeHealth(int newHealth)
     {
         if(_smoothChangingValue != null)
             StopCoroutine(_smoothChangingValue);

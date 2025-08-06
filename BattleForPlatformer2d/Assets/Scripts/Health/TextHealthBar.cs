@@ -4,23 +4,10 @@ using TMPro;
 using UnityEngine;
 using Interfaces;
 
-public class TextHealthBar : MonoBehaviour, IHealthChangeable
+public class TextHealthBar : RenderHealth
 {
-    [SerializeField] private HealthIndicator _healthIndicator;
     [SerializeField] private TMP_Text _currentHealth;
     [SerializeField] private TMP_Text _maxHealth;
-
-    private void OnEnable()
-    {
-        _healthIndicator.TakedDamage += ChangeHealth;
-        _healthIndicator.Recovered += ChangeHealth;
-    }
-
-    private void OnDisable()
-    {
-        _healthIndicator.TakedDamage -= ChangeHealth;
-        _healthIndicator.Recovered -= ChangeHealth;
-    }
 
     private void Start()
     {
@@ -28,7 +15,7 @@ public class TextHealthBar : MonoBehaviour, IHealthChangeable
         _currentHealth.text = _healthIndicator.Health.ToString();
     }
 
-    public void ChangeHealth(int newHealth) 
+    override protected void ChangeHealth(int newHealth) 
     {
         _currentHealth.text = newHealth.ToString();
     }

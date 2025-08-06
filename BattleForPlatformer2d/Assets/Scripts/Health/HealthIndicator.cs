@@ -8,9 +8,13 @@ using UnityEngine.UI;
 public class HealthIndicator : MonoBehaviour
 {
     [SerializeField] private int _health;
+    [SerializeField] private Button _damageButton;
+    [SerializeField] private Button _recoveryButton;
 
     private int _maxHealth = 20;
     private int _minHealth = 0;
+    private int _buttonDamage = 2;
+    private int _buttonRecovery = 2;
 
     public event Action Died;
     public event Action<int> TakedDamage;
@@ -21,6 +25,14 @@ public class HealthIndicator : MonoBehaviour
     private void OnEnable()
     {
         _health = _maxHealth;
+        _damageButton?.onClick.AddListener(() => TakeDamage(_buttonDamage));
+        _recoveryButton?.onClick.AddListener(() => Recovery(_buttonRecovery));
+    }
+
+    private void OnDisable()
+    {
+        _damageButton?.onClick.RemoveListener(() => TakeDamage(_buttonDamage));
+        _recoveryButton?.onClick.RemoveListener(() => Recovery(_buttonRecovery));
     }
 
     public void TakeDamage(int damage) 
