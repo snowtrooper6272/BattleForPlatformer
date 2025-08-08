@@ -6,18 +6,18 @@ using Interfaces;
 
 public abstract class RenderHealth : MonoBehaviour
 {
-    [SerializeField] protected HealthIndicator _healthIndicator;
+    [SerializeField] protected HealthIndicator HealthIndicator;
 
     private void OnEnable()
     {
-        _healthIndicator.TakedDamage += ChangeHealth;
-        _healthIndicator.Recovered += ChangeHealth;
+        HealthIndicator.TakedDamage += ChangeHealth;
+        HealthIndicator.Recovered += ChangeHealth;
     }
 
     private void OnDisable()
     {
-        _healthIndicator.TakedDamage -= ChangeHealth;
-        _healthIndicator.Recovered -= ChangeHealth;
+        HealthIndicator.TakedDamage -= ChangeHealth;
+        HealthIndicator.Recovered -= ChangeHealth;
     }
 
     virtual protected void ChangeHealth(int newHealth)

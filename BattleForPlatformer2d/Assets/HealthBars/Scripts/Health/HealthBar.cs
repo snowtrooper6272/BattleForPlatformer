@@ -7,10 +7,15 @@ using System;
 
 public class HealthBar : RenderHealth
 {
-    [SerializeField] private Slider _slider;
+    [SerializeField] protected Slider _slider;
+
+    private void Start()
+    {
+        ChangeHealth(HealthIndicator.Health);
+    }
 
     override protected void ChangeHealth(int newHealth)
     {
-        _slider.value = Convert.ToSingle(newHealth) / Convert.ToSingle(_healthIndicator.MaxHealth);
+        _slider.value = Convert.ToSingle(newHealth) / Convert.ToSingle(HealthIndicator.MaxHealth);
     }
 }

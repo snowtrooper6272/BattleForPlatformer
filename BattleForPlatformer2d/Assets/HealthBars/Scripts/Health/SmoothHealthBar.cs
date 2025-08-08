@@ -5,12 +5,16 @@ using Interfaces;
 using UnityEngine.UI;
 using System;
 
-public class SmoothHealthBar : RenderHealth
+public class SmoothHealthBar : HealthBar
 {
-    [SerializeField] private Slider _slider;
     [SerializeField] private float _timeSmoothChange;
 
     private Coroutine _smoothChangingValue;
+
+    private void Start()
+    {
+        _slider.value = Convert.ToSingle(HealthIndicator.Health) / Convert.ToSingle(HealthIndicator.MaxHealth);
+    }
 
     override protected void ChangeHealth(int newHealth)
     {
@@ -23,14 +27,15 @@ public class SmoothHealthBar : RenderHealth
     private IEnumerator SmoothChangingValue(int newHealth) 
     {
         float currentTime = 0f;
-        float targetValue = Convert.ToSingle(newHealth) / Convert.ToSingle(_healthIndicator.MaxHealth);
+        float targetValue = Convert.ToSingle(newHealth) / Convert.ToSingle(HealthIndicator.MaxHealth);
+        float startSliderPosition = _slider.value;
 
         while (currentTime < _timeSmoothChange) 
         {
             currentTime += Time.deltaTime;
             float normalizedPosition = currentTime / _timeSmoothChange;
 
-            _slider.value = Mathf.Lerp(_slider.value, targetValue, normalizedPosition);
+            _slider.value = Mathf.Lerp(startSliderPosition, targetValue, normalizedPosition);
 
             yield return null;
         }

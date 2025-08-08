@@ -11,8 +11,8 @@ public class TextHealthBar : RenderHealth
 
     private void Start()
     {
-        _maxHealth.text = _healthIndicator.MaxHealth.ToString();
-        _currentHealth.text = _healthIndicator.Health.ToString();
+        _maxHealth.text = HealthIndicator.MaxHealth.ToString();
+        _currentHealth.text = HealthIndicator.Health.ToString();
     }
 
     override protected void ChangeHealth(int newHealth) 
